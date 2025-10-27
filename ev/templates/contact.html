@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact | EV Service Booking{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-white">
+  <div class="container">
+    <h2 class="text-center mb-5" style="color:#00ff99;">Get in Touch</h2>
+
+    <div class="row justify-content-center">
+      <!-- Contact Info -->
+      <div class="col-md-5 mb-4">
+        <div class="p-4 bg-secondary bg-opacity-10 rounded">
+          <h4>Contact Information</h4>
+          <p><strong>Phone:</strong> +91 123 456 7890</p>
+          <p><strong>Email:</strong> support@evservice.com</p>
+          <p><strong>Address:</strong> 123 EV Street, City, Country</p>
+          <p><strong>Working Hours:</strong> Mon - Sat: 9:00 AM - 6:00 PM</p>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-md-6 mb-4">
+        <div class="p-4 bg-secondary bg-opacity-10 rounded">
+          <h4>Send Us a Message</h4>
+          <form method="POST">
+            {% csrf_token %}
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+
+            <div class="mb-3">
+              <label for="id_name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="id_name" name="name_contact" placeholder="Your Name" required>
+            </div>
+            <div class="mb-3">
+              <label for="id_email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="id_email" name="email_contact" placeholder="Your Email" required>
+            </div>
+            <div class="mb-3">
+              <label for="id_message" class="form-label">Message</label>
+              <textarea class="form-control" id="id_message" name="message_contact" rows="5" placeholder="Write your message..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Optional: Google Map -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4" style="color:#00ff99;">Find Us Here</h2>
+    <div class="ratio ratio-16x9 rounded shadow">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18..." 
+              style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}

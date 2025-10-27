@@ -1,0 +1,47 @@
+{% extends 'user.html' %}
+{% load static %}
+
+{% block title %}Search Bunks{% endblock %}
+
+{% block user_content %}
+<div class="container">
+  <h2 class="mb-4 text-primary">🔍 Search Bunks</h2>
+
+  <form method="GET" action="{% url 'search' %}" class="mb-4">
+    <div class="input-group">
+      <input type="text" class="form-control" name="q" placeholder="Enter location or bunk name..." value="{{ query }}">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </form>
+
+  {% if query %}
+  <h5 class="mb-3 text-muted">Results for "<strong>{{ query }}</strong>"</h5>
+  {% endif %}
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for bunk in bunks %}
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        {% if bunk.image %}
+        <img src="{{ bunk.image.url }}" class="card-img-top" style="height:200px; object-fit:cover;">
+        {% else %}
+        <img src="{% static 'images/no_image.jpg' %}" class="card-img-top" style="height:200px; object-fit:cover;">
+        {% endif %}
+
+        <div class="card-body">
+          <h5 class="card-title text-primary">{{ bunk.branch_name }}</h5>
+          <p class="card-text mb-1"><strong>📍 Location:</strong> {{ bunk.location }}</p>
+          <p class="card-text mb-1"><strong>📞 Contact:</strong> {{ bunk.contact }}</p>
+          <p class="card-text mb-2"><strong>✉️ Email:</strong> {{ bunk.email }}</p>
+          <p class="card-text text-muted" style="font-size: 0.9rem;">{{ bunk.descriptions|truncatechars:100 }}</p>
+        </div>
+
+        
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-muted">No bunks found</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

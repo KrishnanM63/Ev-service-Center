@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Add Branch Owner{% endblock %}
+{% block content %}
+<section class="container my-5">
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 700px;">
+        <h2 class="text-center text-success mb-4">Add Branch Owner</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" name="username" id="id_username" class="form-control" value="{{ form.username.value }}">
+                {% if form.username.errors %}
+                    <div class="text-danger">{{ form.username.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                <input type="email" name="email" id="id_email" class="form-control" value="{{ form.email.value }}">
+                {% if form.email.errors %}
+                    <div class="text-danger">{{ form.email.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Branch Name -->
+            <div class="mb-3">
+                <label for="id_branch_name" class="form-label">Branch Name</label>
+                <input type="text" name="branch_name" id="id_branch_name" class="form-control" value="{{ form.branch_name.value }}">
+                {% if form.branch_name.errors %}
+                    <div class="text-danger">{{ form.branch_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Contact -->
+            <div class="mb-3">
+                <label for="id_contact" class="form-label">Contact</label>
+                <input type="text" name="contact" id="id_contact" class="form-control" value="{{ form.contact.value }}">
+                {% if form.contact.errors %}
+                    <div class="text-danger">{{ form.contact.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Location -->
+            <div class="mb-3">
+                <label for="id_location" class="form-label">Location</label>
+                <input type="text" name="location" id="id_location" class="form-control" value="{{ form.location.value }}">
+                {% if form.location.errors %}
+                    <div class="text-danger">{{ form.location.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="id_description" class="form-label">Description</label>
+                <textarea name="descriptions" id="id_description" class="form-control" rows="4" placeholder="Enter a short description about this branch...">{{ form.descriptions.value }}</textarea>
+                {% if form.descriptions.errors %}
+                    <div class="text-danger">{{ form.descriptions.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Image Upload -->
+            <div class="mb-4">
+                <label for="id_image" class="form-label">Branch Image</label>
+                <input type="file" name="image" id="id_image" class="form-control">
+                {% if form.image.errors %}
+                    <div class="text-danger">{{ form.image.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Add Branch Owner</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

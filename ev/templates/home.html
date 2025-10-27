@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | EV Service Booking{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero py-5 bg-dark text-center text-white">
+  <div class="container">
+    <h1>Charge Smarter, Drive Greener ⚡</h1>
+    <p class="lead">Book your EV service quickly and easily at certified service centers.</p>
+    <a href="{% url 'search_service' %}" class="btn btn-success btn-lg px-4 py-2">Book Now</a>
+  </div>
+</section>
+
+<!-- Service Centers Section -->
+<section class="py-5 bg-dark text-white">
+  <div class="container">
+    <h2 class="mb-4 text-center" style="color:#00ff99;">Our Service Centers</h2>
+    {% if service_centers %}
+      <div class="row g-4">
+        {% for center in service_centers %}
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 card-hover">
+              {% if center.image_service %}
+                <img src="{{ center.image_service.url }}" 
+                     class="card-img-top" 
+                     alt="{{ center.branch_name_service }}" 
+                     style="object-fit: cover; height: 200px; width: 100%;">
+              {% endif %}
+              <div class="card-body bg-light rounded-bottom text-dark">
+                <h5 class="card-title">{{ center.branch_name_service }}</h5>
+                <p class="card-text"><strong>Contact:</strong> {{ center.contact_service }}</p>
+                <p class="card-text"><strong>Location:</strong> {{ center.location_service }}</p>
+                <p class="card-text">{{ center.descriptions_service|truncatewords:20 }}</p>
+              </div>
+              <div class="card-footer bg-white rounded-bottom text-center">
+                <a href="{% url 'booking_page' center.id %}" class="btn btn-success btn-sm">Book Now</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-muted">No service centers available at the moment.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 text-center bg-dark">
+  <div class="container">
+    <h2 class="mb-4" style="color:#00ff99;">Why Choose EV Service Booking?</h2>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <div class="p-4 bg-secondary bg-opacity-10 rounded">
+          <h4>Fast Booking</h4>
+          <p>Book your EV service slot within seconds and avoid waiting in queues.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="p-4 bg-secondary bg-opacity-10 rounded">
+          <h4>Reliable Locations</h4>
+          <p>Find verified EV service centers near your location easily.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="p-4 bg-secondary bg-opacity-10 rounded">
+          <h4>Eco-Friendly</h4>
+          <p>Support sustainable transport by choosing certified EV services.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Additional CSS -->
+<style>
+  .card-hover {
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  .btn-hero {
+    background-color: #00ff99;
+    color: #000;
+    font-weight: 600;
+  }
+  .btn-hero:hover {
+    background-color: #00e68a;
+    color: #000;
+  }
+</style>
+{% endblock %}

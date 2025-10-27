@@ -1,0 +1,56 @@
+{% extends 'user.html' %}
+{% block title %}Edit Mechanic{% endblock %}
+
+{% block user_content %}
+<div class="container mt-5">
+  <div class="card shadow-lg p-4 rounded-4">
+    <h3 class="text-center text-primary mb-4">✏️ Edit Mechanic Details</h3>
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Name</label>
+          <input type="text" name="name_mechanic" value="{{ mechanic.name_mechanic }}" class="form-control" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Contact</label>
+          <input type="text" name="contact_mechanic" value="{{ mechanic.contact_mechanic }}" class="form-control" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Email</label>
+          <input type="email" name="email_mechanic" value="{{ mechanic.email_mechanic }}" class="form-control" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Specialization</label>
+          <input type="text" name="specialization_mechanic" value="{{ mechanic.specialization_mechanic }}" class="form-control" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Location</label>
+          <input type="text" name="location_mechanic" value="{{ mechanic.location_mechanic }}" class="form-control" required>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label fw-semibold">Available From</label>
+          <input type="time" name="available_from_mechanic" value="{{ mechanic.available_from_mechanic }}" class="form-control" required>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label fw-semibold">Available To</label>
+          <input type="time" name="available_to_mechanic" value="{{ mechanic.available_to_mechanic }}" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary px-4">💾 Update Mechanic</button>
+        <a href="{% url 'service_center' %}" class="btn btn-secondary px-4 ms-2">⬅ Back</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

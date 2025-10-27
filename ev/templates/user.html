@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <!-- Sidebar -->
+     {% if request.session.role|lower == 'customer' %}
+    <div class="col-md-3 mb-4">
+      <div class="list-group shadow-sm">
+        <a href="{% url 'search' %}" class="list-group-item list-group-item-action">🔍 Search Bunks</a>
+        <a href="{%  url 'search_service' %}" class="list-group-item list-group-item-action">⚙️ Search EV Services</a>
+        <a href="{% url 'mybooking' %}" class="list-group-item list-group-item-action">📘 My Bookings</a>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <div class="col-md-9">
+      {% block user_content %}
+      <div class="text-center">
+        <h3>Welcome to your Dashboard!</h3>
+        <p class="text-muted">Use the sidebar to search bunks, find EV service branches, or view your bookings.</p>
+      </div>
+      {% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}

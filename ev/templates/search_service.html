@@ -1,0 +1,63 @@
+{% extends 'user.html' %}
+{% load static %}
+
+{% block title %}Search Service Centers{% endblock %}
+
+{% block user_content %}
+<div class="container mt-4">
+  <h2 class="mb-4 text-primary text-center">🔍 Search Service Centers</h2>
+
+  <!-- Search Form -->
+  <form method="GET" action="{% url 'search_service' %}" class="mb-4">
+    <div class="input-group">
+      <input type="text" class="form-control" name="q" placeholder="Enter location or service center name..." value="{{ query }}">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </form>
+
+  <!-- Show the search query -->
+  {% if query %}
+  <h5 class="mb-3 text-muted text-center">Results for "<strong>{{ query }}</strong>"</h5>
+  {% endif %}
+
+  <!-- Service Center Cards -->
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for bunk in bunks_dtails %}
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        {% if bunk.image_service %}
+        <img src="{{ bunk.image_service.url }}" class="card-img-top" style="height:200px; object-fit:cover;">
+        {% else %}
+        <img src="{% static 'images/no_image.jpg' %}" class="card-img-top" style="height:200px; object-fit:cover;">
+        {% endif %}
+
+        <div class="card-body">
+          <h5 class="card-title text-primary">{{ bunk.branch_name_service }}</h5>
+          <p class="card-text mb-1"><strong>📍 Location:</strong> {{ bunk.location_service }}</p>
+          <p class="card-text mb-1"><strong>📞 Contact:</strong> {{ bunk.contact_service }}</p>
+          <p class="card-text mb-2"><strong>✉️ Email:</strong> {{ bunk.email_service }}</p>
+          <p class="card-text text-muted" style="font-size: 0.9rem;">{{ bunk.descriptions_service|truncatechars:100 }}</p>
+        </div>
+
+        <div class="card-footer bg-light text-center">
+          <a href="{% url 'booking_page' bunk.id %}" class="btn btn-primary">Book Now</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted mt-3">No service centers found for your search.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Optional Custom CSS -->
+<style>
+  .card-title {
+    font-weight: 600;
+  }
+  .card-footer .btn {
+    width: 100%;
+  }
+</style>
+
+{% endblock %}

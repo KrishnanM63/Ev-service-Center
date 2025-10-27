@@ -1,0 +1,46 @@
+{% extends 'user.html' %}
+{% load static %}
+
+{% block title %}Book a Service{% endblock %}
+
+{% block user_content %}
+<div class="container mt-4">
+  <h2 class="mb-4 text-primary">🔧 Book a Service</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label class="form-label">Your Name</label>
+      <input type="text" name="name_booking" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" name="email_booking" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Contact Number</label>
+      <input type="text" name="number_booking" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Vehicle Number</label>
+      <input type="text" name="vehicle_number" class="form-control" placeholder="e.g., TN10AB1234" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Preferred Service Date</label>
+      <input type="date" name="service_date" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Notes (Optional)</label>
+      <textarea name="notes_booking" class="form-control" rows="3" placeholder="Any special instructions..."></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Booking</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}My Bookings{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+  <h2 class="mb-4 text-primary fw-bold">My Bookings</h2>
+  <p class="text-muted">View all user service bookings and update their status.</p>
+
+  {% if bookingss %}
+  <div class="table-responsive shadow-lg rounded-4 mt-4">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>User Name</th>
+          <th>Email</th>
+          <th>Mobile Number</th>
+          <th>Vehicle Number</th>
+          <th>Service Center</th>
+          <th>Branch</th>
+          <th>Service Date</th>
+          <th>Notes</th>
+          <th>Status</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in bookingss %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ b.name_booking }}</td>
+          <td>{{ b.email_booking }}</td>
+          <td>{{ b.number_booking }}</td>
+          <td>{{ b.vehicle_number }}</td>
+          <td>{{ b.service_center.username_service|default:"-" }}</td>
+          <td>{{ b.service_center.branch_name_service|default:"-" }}</td>
+          <td>{{ b.service_date }}</td>
+          <td>{{ b.notes_booking|truncatechars:30 }}</td>
+          <td>
+            {% if b.status == "ok" %}
+              <span class="badge bg-success">OK</span>
+            {% elif b.status == "pending" %}
+              <span class="badge bg-warning text-dark">Pending</span>
+            {% else %}
+              <span class="badge bg-secondary">New</span>
+            {% endif %}
+          </td>
+   
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="alert alert-info text-center mt-4">
+      No bookings found yet.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

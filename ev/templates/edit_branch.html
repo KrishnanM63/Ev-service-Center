@@ -1,0 +1,65 @@
+{% extends 'user.html' %}
+{% load static %}
+
+{% block title %}Edit Branch{% endblock %}
+
+{% block user_content %}
+<div class="container mt-5">
+    <h2 class="text-primary mb-4 text-center">✏️ Edit Branch Details</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm p-4">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="username_service" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username_service" name="username_service" value="{{ branch.username_service }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email_service" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email_service" name="email_service" value="{{ branch.email_service }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="branch_name_service" class="form-label">Branch Name</label>
+                        <input type="text" class="form-control" id="branch_name_service" name="branch_name_service" value="{{ branch.branch_name_service }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contact_service" class="form-label">Contact</label>
+                        <input type="text" class="form-control" id="contact_service" name="contact_service" value="{{ branch.contact_service }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="location_service" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location_service" name="location_service" value="{{ branch.location_service }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image_service" class="form-label">Branch Image</label>
+                        {% if branch.image_service %}
+                        <div class="mb-2">
+                            <img src="{{ branch.image_service.url }}" alt="Branch Image" class="img-thumbnail" style="height:150px;">
+                        </div>
+                        {% endif %}
+                        <input type="file" class="form-control" id="image_service" name="image_service">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descriptions_service" class="form-label">Description</label>
+                        <textarea class="form-control" id="descriptions_service" name="descriptions_service" rows="4" required>{{ branch.descriptions_service }}</textarea>
+                    </div>
+
+                            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary px-4">💾 Update Mechanic</button>
+                <a href="{% url 'service_center' %}" class="btn btn-secondary px-4 ms-2">⬅ Back</a>
+            </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

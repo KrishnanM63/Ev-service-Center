@@ -1,0 +1,202 @@
+{% extends 'user.html' %}
+{% block title %}Service Center Dashboard{% endblock %}
+
+{% block user_content %}
+<div class="container mt-4">
+
+  <h2 class="mb-4 text-primary text-center">{{ service_center.branch_name_service }} Dashboard</h2>
+
+  <!-- Tabs Navigation -->
+  <ul class="nav nav-tabs mb-3" id="dashboardTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings" type="button" role="tab">📋 Bookings</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="mechanics-tab" data-bs-toggle="tab" data-bs-target="#mechanics" type="button" role="tab">🛠 Mechanics</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="branches-tab" data-bs-toggle="tab" data-bs-target="#branches" type="button" role="tab">🏢 Branches</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" type="button" role="tab">📨 Contacts</button>
+    </li>
+  </ul>
+
+  <!-- Tabs Content -->
+  <div class="tab-content" id="dashboardTabsContent">
+
+    <!-- Bookings Table -->
+    <div class="tab-pane fade show active" id="bookings" role="tabpanel">
+      {% if bookingss %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle text-center">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Contact Number</th>
+              <th>Vehicle Number</th>
+              <th>Service Date</th>
+              <th>Notes</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for b in bookingss %}
+            <tr>
+              <td>{{ b.name_booking }}</td>
+              <td>{{ b.email_booking }}</td>
+              <td>{{ b.number_booking }}</td>
+              <td>{{ b.vehicle_number }}</td>
+              <td>{{ b.service_date }}</td>
+              <td>{{ b.notes_booking|truncatechars:30}}</td>
+              <td>
+                <span class="badge 
+                  {% if b.status == 'ok' %}bg-success
+                  {% elif b.status == 'pending' %}bg-warning text-dark
+                  {% else %}bg-secondary
+                  {% endif %}">
+                  {{ b.status|capfirst }}
+                </span>
+              </td>
+              <td>
+                <form method="POST" action="" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-success mb-1">OK</button>
+                </form>
+                <form method="POST" action="" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-warning text-dark mb-1">Pending</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+        <p class="text-center text-muted">No bookings yet.</p>
+      {% endif %}
+    </div>
+
+    <!-- Mechanics Table -->
+    <div class="tab-pane fade" id="mechanics" role="tabpanel">
+      <a href="{% url 'add_mechanic' %}" class="btn btn-success mb-3">➕ Add Mechanic</a>
+      {% if mechanics %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle text-center">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>Specialization</th>
+              <th>Location</th>
+              <th>Available From</th>
+              <th>Available To</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for m in mechanics %}
+            <tr>
+              <td>{{ m.name_mechanic }}</td>
+              <td>{{ m.contact_mechanic }}</td>
+              <td>{{ m.email_mechanic }}</td>
+              <td>{{ m.specialization_mechanic }}</td>
+              <td>{{ m.location_mechanic }}</td>
+              <td>{{ m.available_from_mechanic }}</td>
+              <td>{{ m.available_to_mechanic }}</td>
+              <td>
+                <a href="{% url 'update_mechanic' m.id %}" class="btn btn-sm btn-primary mb-1">Edit</a>
+                <a href="{% url 'delete_machanic' m.id %}" class="btn btn-sm btn-danger mb-1">Remove</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+        <p class="text-center text-muted">No mechanics added yet.</p>
+      {% endif %}
+    </div>
+
+    <!-- Branches Table -->
+    <div class="tab-pane fade" id="branches" role="tabpanel">
+      <a href="{% url 'search_service_add' %}" class="btn btn-success mb-3">➕ Add Branch</a>
+      {% if branches %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle text-center">
+          <thead class="table-light">
+            <tr>
+              <th>Branch Name</th>
+              <th>Location</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for br in branches %}
+            <tr>
+              <td>{{ br.branch_name_service }}</td>
+              <td>{{ br.location_service }}</td>
+              <td>{{ br.contact_service }}</td>
+              <td>{{ br.email_service }}</td>
+              <td>{{ br.descriptions_service|truncatechars:50 }}</td>
+              <td>
+                <a href="{% url 'edit_branch' br.id %}" class="btn btn-sm btn-primary mb-1">Edit</a>
+                <a href="{% url 'delete_service_center' br.id %}" class="btn btn-sm btn-danger mb-1">Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+        <p class="text-center text-muted">No branches added yet.</p>
+      {% endif %}
+    </div>
+
+    <!-- Contact Messages Table -->
+    <div class="tab-pane fade" id="contacts" role="tabpanel">
+      {% if contacts %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle text-center">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in contacts %}
+            <tr>
+              <td>{{ c.name_contact }}</td>
+              <td>{{ c.email_contact }}</td>
+              <td>{{ c.message_contact|truncatechars:50 }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+        <p class="text-center text-muted">No contact messages yet.</p>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+<!-- CSS for center alignment -->
+<style>
+  table td, table th {
+    text-align: center;
+    vertical-align: middle;
+  }
+</style>
+
+{% endblock %}
